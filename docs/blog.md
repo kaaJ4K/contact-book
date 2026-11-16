@@ -10,8 +10,8 @@
 | 姓名 / 学号 | 廖伟镔 / 832402110 |
 | 本次作业目标 | 实现一个可用的地址簿 Web 程序：收藏联系人、单人多条联系方式、Excel 导入导出，并发布到云端、完成博客与演示视频 |
 | 项目仓库 | <https://github.com/kaaJ4K/contact-book> |
-| 在线应用 | <https://kaaJ4K.github.io/contact-book/> |
-| 在线博客 | <https://kaaJ4K.github.io/contact-book/blog/> |
+| 在线应用 | <https://kaaj4k.github.io/contact-book/> |
+| 在线博客 | <https://kaaj4k.github.io/contact-book/blog/> |
 | 参考资料 | [MDN Web Docs](https://developer.mozilla.org/)、[React 官方文档](https://react.dev/)、[SheetJS / xlsx-js-style](https://github.com/gitbrent/xlsx-js-style)、Google HTML/CSS/JS Style Guide、Airbnb JavaScript Style Guide |
 
 ## 目录
@@ -37,8 +37,8 @@
 | 类型 | 链接 |
 | --- | --- |
 | GitHub 仓库 | <https://github.com/kaaJ4K/contact-book> |
-| 在线体验（GitHub Pages） | <https://kaaJ4K.github.io/contact-book/> |
-| 博客在线版 | <https://kaaJ4K.github.io/contact-book/blog/> |
+| 在线体验（GitHub Pages） | <https://kaaj4k.github.io/contact-book/> |
+| 博客在线版 | <https://kaaj4k.github.io/contact-book/blog/> |
 | 代码规范 | <https://github.com/kaaJ4K/contact-book/blob/main/codestyle.md> |
 | Pull Request（功能分支 → main） | <https://github.com/kaaJ4K/contact-book/pull/1> |
 | Release v1.0.0 | <https://github.com/kaaJ4K/contact-book/releases/tag/v1.0.0> |
@@ -67,7 +67,7 @@ npm test            # 16 个单元测试
 | Excel 导出 | 25（与导入合计） | 每个联系人一行，16 种信息列；支持仅导出收藏；带样式和自动筛选 | 截图 7；`src/lib/excel.js`、`docs/samples/export-demo.xlsx` |
 | Excel 导入 | 同上 | 模板下载、拖拽上传、表头别名、预览、逐行校验、合并更新/跳过重复、导入结果统计 | 截图 5、6；`src/components/ImportDialog.jsx` |
 | 页面样式 | 10 | 暖纸色 + 深森林绿设计；响应式侧栏/卡片/弹窗；键盘可访问与 reduced-motion 适配 | 截图 1–10 |
-| 云端部署（可选） | +15 | GitHub Pages 公共云托管，公网可直接访问 | <https://kaaJ4K.github.io/contact-book/> |
+| 云端部署（可选） | +15 | GitHub Pages 公共云托管，公网可直接访问 | <https://kaaj4k.github.io/contact-book/> |
 | 附加能力 | — | 全局搜索、标签筛选、三种排序、删除撤销、键盘快捷键、移动端悬浮新建、自动保存状态提示 | 见下文 |
 
 ### 功能清单
@@ -86,14 +86,21 @@ npm test            # 16 个单元测试
 
 ![GitHub 贡献者与提交次数](images/github-contributors.png)
 
+![已合并的 Pull Request](images/github-pr.png)
+
+提交统计（截至截图时）：`main` 分支共 **9 个提交**（含 1 个 merge commit）；GitHub Contributors 页面显示 **kaaJ4K — 8 commits**（GitHub 的贡献统计不含 merge commit），仓库仅本人 1 位贡献者。截图之后新增的文档提交可在仓库的 Commits 页面查看。
+
 提交记录（主要节点）：
 
 ```text
-feat(web): build address book UI with bookmarks and multi-method editor
-feat(excel): add import/export with preview, validation and merge modes
-test: cover contact merging, filtering and Excel round trip
+chore: scaffold esbuild static site and base page
+feat(data): add contact model, persistence and Excel engine
+feat(web): build bookmarkable address book with multi-method editor
+test: cover filtering, merging and Excel round trip
+chore(qa): add browser QA, screenshot and demo recording tools
 docs: add README, code standard, screenshots and demo video
-chore: polish deployment, QA automation and release notes
+docs(blog): add assignment blog with implementation notes and PSP
+feat: 联络簿 Contact Atlas — bookmarks, multi-method contacts and Excel import/export   # PR merge
 ```
 
 - 分支策略：`feature/address-book` 开发 → Pull Request → 合并 `main`。
@@ -243,14 +250,14 @@ xlsx 解析 → 在前 10 行内查找表头 → 中英文别名映射
 
 ## 六、运行视频
 
-- **在线视频**：<https://kaaJ4K.github.io/contact-book/blog/demo.mp4>
+- **在线视频**：<https://kaaj4k.github.io/contact-book/blog/demo.mp4>
 - **仓库文件**：[docs/demo.mp4](https://github.com/kaaJ4K/contact-book/blob/main/docs/demo.mp4)
 - **时长 / 内容**：约 65 秒，覆盖收藏筛选、多联系方式编辑、新建联系人、Excel 导入预览与结果、导出弹窗、搜索、移动端视图。
 - 如果课程平台要求视频上传，可直接使用仓库中的 `docs/demo.mp4`；CSDN / 哔哩哔哩等平台上传后把链接补充到本节即可。
 
 <video controls preload="metadata" poster="images/video-poster.jpg" src="demo.mp4"></video>
 
-[![观看演示视频](images/video-poster.jpg)](https://kaaJ4K.github.io/contact-book/blog/demo.mp4)
+[![观看演示视频](images/video-poster.jpg)](https://kaaj4k.github.io/contact-book/blog/demo.mp4)
 
 ## 七、云端部署
 
@@ -259,7 +266,7 @@ xlsx 解析 → 在前 10 行内查找表头 → 中英文别名映射
 1. `npm run build` 生成 `dist/`；
 2. 将 `dist/` 内容发布到仓库的 `gh-pages` 分支；
 3. 仓库 Settings → Pages → Deploy from a branch → `gh-pages / (root)`；
-4. 公网地址：<https://kaaJ4K.github.io/contact-book/>。
+4. 公网地址：<https://kaaj4k.github.io/contact-book/>。
 
 这不是 localhost，也不依赖运行者电脑：任何设备打开公网地址即可使用；数据保存在各自浏览器，第一次打开自动载入示例联系人。
 

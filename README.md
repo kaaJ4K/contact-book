@@ -2,7 +2,8 @@
 
 一个为「软件工程 · 通讯录」个人编程作业实现的地址簿 Web 应用：收藏常用联系人、为同一个人维护任意多条联系方式，并支持 Excel 导入导出与云端访问。
 
-> **在线体验**：<https://kaaJ4K.github.io/contact-book/>  
+> **在线体验**：<https://kaaj4k.github.io/contact-book/>  
+> **在线博客**：<https://kaaj4k.github.io/contact-book/blog/>  
 > **项目地址**：<https://github.com/kaaJ4K/contact-book>  
 > **作业博客**：[docs/blog.md](docs/blog.md) · **演示视频**：[docs/demo.mp4](docs/demo.mp4)
 
@@ -122,7 +123,7 @@ npm run build
 # 选择 Deploy from a branch: gh-pages / (root)
 ```
 
-访问地址：<https://kaaJ4K.github.io/contact-book/>
+访问地址：<https://kaaj4k.github.io/contact-book/>
 
 ## 隐私说明
 
