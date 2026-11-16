@@ -1,0 +1,216 @@
+import { normalizeContact } from '../lib/contacts.js';
+
+function method(type, value, label) {
+  return { type, value, ...(label ? { label } : {}) };
+}
+
+function daysAgo(days, hours = 0) {
+  return new Date(Date.now() - days * 86400000 - hours * 3600000).toISOString();
+}
+
+const SEED_ROWS = [
+  {
+    id: 'seed-lin-wan',
+    name: '林晚',
+    company: '澄野设计',
+    title: '产品设计师',
+    birthday: '1996-04-18',
+    tags: ['设计', '客户'],
+    favorite: true,
+    note: '对版式和咖啡都很有研究。下次见面带上那本《白》的装帧样书。',
+    methods: [
+      method('phone', '138 0013 8021'),
+      method('phone', '021-6288 0312'),
+      method('email', 'wan.lin@chengye.design'),
+      method('wechat', 'linwan_design'),
+      method('address', '上海市徐汇区安福路 288 号 502'),
+      method('other', '@林晚设计', '小红书'),
+    ],
+    createdAt: daysAgo(160, 2),
+    updatedAt: daysAgo(0, 2),
+  },
+  {
+    id: 'seed-chen-yu',
+    name: '陈屿',
+    company: '南山实验室',
+    title: '算法工程师',
+    tags: ['技术', '同学'],
+    favorite: true,
+    note: '推荐过两本关于推荐系统的书，准备这周末读完。',
+    methods: [
+      method('phone', '139 1188 2046'),
+      method('email', 'yu.chen@nanshan.ai'),
+      method('wechat', 'chenyulab'),
+      method('qq', '1834220918'),
+      method('other', 'chenyulab', 'GitHub'),
+    ],
+    createdAt: daysAgo(148),
+    updatedAt: daysAgo(1, 5),
+  },
+  {
+    id: 'seed-su-he',
+    name: '苏禾',
+    company: '自由摄影师',
+    title: '商业 / 人像摄影',
+    birthday: '1994-09-02',
+    tags: ['摄影', '朋友'],
+    favorite: true,
+    note: '工作室在转塘，拍胶片也拍数码。年底想约一组黑白肖像。',
+    methods: [
+      method('phone', '137 6120 4488'),
+      method('email', 'suhe.photo@foxmail.com'),
+      method('wechat', 'suhe_studio'),
+      method('address', '杭州市西湖区转塘象山艺术公社 7 号楼'),
+      method('other', 'suhe.photo.site', '作品集'),
+    ],
+    createdAt: daysAgo(132),
+    updatedAt: daysAgo(3),
+  },
+  {
+    id: 'seed-zhou-ye',
+    name: '周野',
+    company: '远山咖啡',
+    title: '主理人',
+    tags: ['咖啡', '朋友'],
+    favorite: true,
+    note: '新烘的耶加雪菲偏柑橘调，去店里记得先尝手冲。',
+    methods: [
+      method('phone', '186 0210 7731'),
+      method('wechat', 'yuanshan_coffee'),
+      method('address', '成都市武侯区玉林西路 56 号'),
+      method('other', '远山咖啡', '小红书'),
+    ],
+    createdAt: daysAgo(128),
+    updatedAt: daysAgo(4, 3),
+  },
+  {
+    id: 'seed-gu-qinghe',
+    name: '顾清和',
+    company: '城市更新事务所',
+    title: '建筑师',
+    tags: ['设计', '合作'],
+    note: '在做一个旧厂房改造项目，想约时间聊聊导视系统。',
+    methods: [
+      method('phone', '135 8899 2017'),
+      method('email', 'qinghe.gu@urbanworks.cn'),
+      method('address', '北京市朝阳区亮马桥路 42 号'),
+      method('other', 'qinghe_gu', '微信'),
+    ],
+    createdAt: daysAgo(110),
+    updatedAt: daysAgo(6),
+  },
+  {
+    id: 'seed-shen-yan',
+    name: '沈砚',
+    company: '静水书店',
+    title: '店主',
+    birthday: '1991-12-11',
+    tags: ['阅读', '朋友'],
+    methods: [
+      method('phone', '188 0192 3355'),
+      method('wechat', 'jingshui_books'),
+      method('address', '南京市鼓楼区金银街 8 号'),
+      method('email', 'hello@jingshui.book'),
+    ],
+    createdAt: daysAgo(102),
+    updatedAt: daysAgo(8),
+  },
+  {
+    id: 'seed-tang-tang',
+    name: '唐棠',
+    company: '棠梨花艺',
+    title: '花艺师',
+    tags: ['花艺', '生活'],
+    methods: [
+      method('phone', '150 2211 9080'),
+      method('email', 'tangtang@tangli.florist'),
+      method('wechat', 'tangtang_flora'),
+      method('other', '棠棠花事', '视频号'),
+    ],
+    createdAt: daysAgo(96),
+    updatedAt: daysAgo(10, 4),
+  },
+  {
+    id: 'seed-jiang-ting',
+    name: '江停',
+    company: '远航科技',
+    title: '前端工程师',
+    tags: ['技术', '同事'],
+    note: '在远程办公，周三下午通常在写周报。',
+    methods: [
+      method('phone', '136 7788 6612'),
+      method('email', 'jiangting@yuanhang.tech'),
+      method('qq', '441209338'),
+      method('other', 'jiangting-dev', 'GitHub'),
+    ],
+    createdAt: daysAgo(90),
+    updatedAt: daysAgo(12),
+  },
+  {
+    id: 'seed-wen-yan',
+    name: '温言',
+    company: '南风出版社',
+    title: '图书编辑',
+    birthday: '1989-06-07',
+    tags: ['出版', '阅读'],
+    note: '年会书单可以找她，最近在推一本关于城市散步的随笔集。',
+    methods: [
+      method('phone', '139 2044 7810'),
+      method('email', 'wenyan@nanfeng.press'),
+      method('address', '广州市越秀区水荫路 11 号'),
+    ],
+    createdAt: daysAgo(84),
+    updatedAt: daysAgo(14, 1),
+  },
+  {
+    id: 'seed-lu-li',
+    name: '陆离',
+    company: '山海影业',
+    title: '制片',
+    tags: ['影视', '合作'],
+    methods: [
+      method('phone', '133 0912 6644'),
+      method('email', 'luli@shanhai.film'),
+      method('wechat', 'luli_film'),
+      method('address', '上海市静安区北京西路 1399 号'),
+    ],
+    createdAt: daysAgo(72),
+    updatedAt: daysAgo(16),
+  },
+  {
+    id: 'seed-ye-qing',
+    name: '叶青',
+    company: '青禾公益',
+    title: '项目负责人',
+    tags: ['公益', '朋友'],
+    note: '周末有旧书义卖，志愿者报名可以直接找她。',
+    methods: [
+      method('phone', '189 3320 1176'),
+      method('email', 'yeqing@qinghe.org'),
+      method('wechat', 'qinghe_ye'),
+      method('other', 'volunteer@qinghe.org', '志愿邮箱'),
+    ],
+    createdAt: daysAgo(60),
+    updatedAt: daysAgo(20),
+  },
+  {
+    id: 'seed-xu-nan',
+    name: '许南',
+    company: '自由译者',
+    title: '英语 / 法语翻译',
+    tags: ['翻译', '阅读'],
+    methods: [
+      method('phone', '137 8890 2451'),
+      method('email', 'xunan.translate@gmail.com'),
+      method('wechat', 'xunan_words'),
+    ],
+    createdAt: daysAgo(48),
+    updatedAt: daysAgo(26),
+  },
+];
+
+export function createSeedContacts() {
+  return SEED_ROWS.map((row) => normalizeContact(row));
+}
+
+export const SEED_COUNT = SEED_ROWS.length;

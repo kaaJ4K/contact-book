@@ -1,0 +1,26 @@
+{
+  "name": "contact-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "联络簿 Contact Atlas — a warm, local-first address book with bookmarks, multiple contact methods and Excel import/export.",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "dev": "node tools/build.mjs && node tools/serve.mjs dist 5173",
+    "preview": "node tools/serve.mjs dist 4173",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "xlsx-js-style": "1.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.21.5",
+    "marked": "18.2.0"
+  },
+  "license": "MIT"
+}
