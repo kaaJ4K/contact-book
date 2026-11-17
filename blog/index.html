@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact Atlas · Assignment Blog</title>
+<meta name="description" content="Contact Atlas assignment blog: bookmarks, multiple contact methods, Excel import/export, and cloud deployment.">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<style>
+:root {
+  --ink: #1f332e;
+  --ink-soft: #42564e;
+  --paper: #f5efe4;
+  --surface: #fffdf8;
+  --line: #e4dac9;
+  --line-strong: #d5c6b0;
+  --coral: #cf6749;
+  --coral-deep: #b8553a;
+  --gold: #e5a84f;
+  --sage: #6f8878;
+  --muted: #7c7469;
+  --display: "Iowan Old Style", "Palatino Linotype", "Songti SC", Georgia, serif;
+  --body: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: "Cascadia Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; color: var(--ink);
+  background:
+    radial-gradient(circle at 92% 4%, rgba(207,103,73,.08), transparent 30rem),
+    radial-gradient(circle at 3% 96%, rgba(111,136,120,.1), transparent 28rem),
+    var(--paper);
+  font-family: var(--body); font-size: 15px; line-height: 1.85;
+}
+a { color: var(--coral-deep); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--ink); }
+.site-header {
+  position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 18px;
+  padding: 14px 28px; border-bottom: 1px solid rgba(213,198,176,.6);
+  background: rgba(245,239,228,.88); backdrop-filter: blur(16px);
+}
+.site-brand { display: flex; flex-direction: column; line-height: 1.2; margin-right: auto; }
+.site-brand strong { font-family: var(--display); font-size: 21px; font-weight: 600; letter-spacing: .05em; }
+.site-brand small { margin-top: 2px; font-family: var(--mono); font-size: 8.5px; letter-spacing: .18em; color: var(--muted); }
+.site-nav { display: flex; align-items: center; gap: 7px; }
+.site-nav a {
+  padding: 6px 11px; border: 1px solid transparent; border-radius: 8px;
+  color: var(--ink-soft); font-size: 11.5px; text-decoration: none;
+}
+.site-nav a:hover { border-color: var(--line-strong); background: var(--surface); color: var(--ink); }
+.site-nav a.primary { border-color: var(--ink); background: var(--ink); color: #f8f2e6; }
+main { width: min(920px, calc(100% - 38px)); margin: 0 auto; padding: 52px 0 70px; }
+.article {
+  padding: clamp(24px, 5vw, 58px); border: 1px solid var(--line); border-radius: 26px;
+  background: var(--surface); box-shadow: 0 30px 70px -54px rgba(31,51,46,.4);
+}
+.article > h1:first-child {
+  margin-top: 0; font-family: var(--display); font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 500; letter-spacing: -.015em; line-height: 1.28;
+}
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; line-height: 1.35; letter-spacing: -.005em; }
+h1 { margin: 1.2em 0 .6em; font-size: 34px; }
+h2 {
+  margin: 2.1em 0 .7em; padding-top: .7em; border-top: 1px solid var(--line);
+  font-size: 27px; font-weight: 500;
+}
+h3 { margin: 1.7em 0 .5em; font-size: 20px; }
+h4 { margin: 1.4em 0 .3em; font-size: 16px; }
+p { margin: .7em 0; }
+ul, ol { padding-left: 1.4em; margin: .7em 0; }
+li { margin: .25em 0; }
+li::marker { color: var(--coral); }
+hr { margin: 2.4em 0; border: 0; border-top: 1px solid var(--line); }
+blockquote {
+  margin: 1.2em 0; padding: 12px 18px; border-left: 3px solid rgba(207,103,73,.45);
+  border-radius: 0 10px 10px 0; background: rgba(247,228,219,.25); color: var(--ink-soft);
+}
+blockquote p { margin: .2em 0; }
+code {
+  padding: 2px 5px; border: 1px solid var(--line); border-radius: 5px;
+  background: #f9f4e9; color: #7a4a36; font-family: var(--mono); font-size: .84em;
+}
+pre {
+  overflow-x: auto; margin: 1.3em 0; padding: 17px 19px; border: 1px solid #263c34;
+  border-radius: 12px; background: #1b2d27; color: #f2ebdd; line-height: 1.65;
+}
+pre code { padding: 0; border: 0; background: transparent; color: inherit; font-size: 12px; }
+table {
+  width: 100%; margin: 1.4em 0; border-collapse: collapse; font-size: 12.5px; line-height: 1.6;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+}
+thead { background: #f1e9db; }
+th { padding: 9px 10px; border-bottom: 1px solid var(--line-strong); color: var(--ink-soft); font-weight: 600; text-align: left; }
+td { padding: 8px 10px; border-bottom: 1px solid rgba(228,218,201,.66); vertical-align: top; }
+tbody tr:nth-child(even) { background: rgba(251,247,238,.5); }
+tbody tr:last-child td { border-bottom: 0; }
+img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 14px 30px -24px rgba(31,51,46,.42); }
+img[src$="video-poster.jpg"] { border: 1px solid var(--line); }
+video { width: 100%; margin: 1.2em 0; border-radius: 12px; background: #14251f; }
+.article > h1 + p, .article > p:first-of-type { color: var(--muted); }
+footer { width: min(920px, calc(100% - 38px)); margin: 0 auto 40px; color: var(--muted); font-size: 11px; text-align: center; }
+footer a { margin: 0 6px; }
+@media (max-width: 720px) {
+  body { font-size: 14px; }
+  .site-header { padding: 11px 15px; flex-wrap: wrap; gap: 8px; }
+  .site-nav a { padding: 5px 8px; font-size: 10.5px; }
+  main { padding-top: 22px; }
+  .article { padding: 19px 16px; border-radius: 16px; }
+  h1 { font-size: 27px; }
+  h2 { font-size: 23px; }
+  h3 { font-size: 18px; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+  pre { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-brand">
+    <strong>Contact Atlas</strong>
+    <small>ASSIGNMENT BLOG · 2026</small>
+  </div>
+  <nav class="site-nav" aria-label="Page navigation">
+    <a href="../">Open app</a>
+    <a href="https://github.com/kaaJ4K/contact-book">GitHub repository</a>
+    <a href="./blog.md">Markdown source</a>
+  </nav>
+</header>
+<main>
+  <article class="article">
+<h1 id="software-engineering-individual-assignment-contact-atlas-bookmarks-multiple-contact-methods-excel-import-amp-export">Software Engineering Individual Assignment: Contact Atlas (Bookmarks / Multiple Contact Methods / Excel Import &amp; Export)</h1>
+<h2 id="assignment-description">Assignment Description</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Course</td>
+<td>Software Engineering (FZU-MU)</td>
+</tr>
+<tr>
+<td>Assignment</td>
+<td>CSDN course community &quot;Programming Assignment — Address Book&quot; (link in the course notice)</td>
+</tr>
+<tr>
+<td>Team / Individual</td>
+<td>Individual project</td>
+</tr>
+<tr>
+<td>Student</td>
+<td>Liao Weibin / 832402110</td>
+</tr>
+<tr>
+<td>Objective</td>
+<td>Build a usable address-book web application with bookmarks, multiple contact methods per person, Excel import/export, cloud deployment, a complete blog, and a demo video</td>
+</tr>
+<tr>
+<td>Repository</td>
+<td><a href="https://github.com/kaaJ4K/contact-book">https://github.com/kaaJ4K/contact-book</a></td>
+</tr>
+<tr>
+<td>Live application</td>
+<td><a href="https://kaaj4k.github.io/contact-book/">https://kaaj4k.github.io/contact-book/</a></td>
+</tr>
+<tr>
+<td>Live blog</td>
+<td><a href="https://kaaj4k.github.io/contact-book/blog/">https://kaaj4k.github.io/contact-book/blog/</a></td>
+</tr>
+<tr>
+<td>References</td>
+<td><a href="https://developer.mozilla.org/">MDN Web Docs</a>, <a href="https://react.dev/">React documentation</a>, <a href="https://github.com/gitbrent/xlsx-js-style">SheetJS / xlsx-js-style</a>, Google HTML/CSS/JS Style Guide, Airbnb JavaScript Style Guide</td>
+</tr>
+</tbody></table>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-project-links-and-quick-start">Project Links and Quick Start</a></li>
+<li><a href="#2-requirements-coverage">Requirements Coverage</a></li>
+<li><a href="#3-git-workflow-and-commit-history">Git Workflow and Commit History</a></li>
+<li><a href="#4-implementation-notes">Implementation Notes</a></li>
+<li><a href="#5-application-screenshots">Application Screenshots</a></li>
+<li><a href="#6-demo-video">Demo Video</a></li>
+<li><a href="#7-cloud-deployment">Cloud Deployment</a></li>
+<li><a href="#8-division-of-labor-and-contribution">Division of Labor and Contribution</a></li>
+<li><a href="#9-difficulties-attempts-and-lessons-learned">Difficulties, Attempts, and Lessons Learned</a></li>
+<li><a href="#10-psp-table">PSP Table</a></li>
+<li><a href="#11-self-check-against-the-grading-rubric">Self-Check Against the Grading Rubric</a></li>
+<li><a href="#12-pre-submission-checklist">Pre-Submission Checklist</a></li>
+</ol>
+<hr>
+<h2 id="1-project-links-and-quick-start">1. Project Links and Quick Start</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GitHub repository</td>
+<td><a href="https://github.com/kaaJ4K/contact-book">https://github.com/kaaJ4K/contact-book</a></td>
+</tr>
+<tr>
+<td>Live application (GitHub Pages)</td>
+<td><a href="https://kaaj4k.github.io/contact-book/">https://kaaj4k.github.io/contact-book/</a></td>
+</tr>
+<tr>
+<td>Live blog</td>
+<td><a href="https://kaaj4k.github.io/contact-book/blog/">https://kaaj4k.github.io/contact-book/blog/</a></td>
+</tr>
+<tr>
+<td>Code standard</td>
+<td><a href="https://github.com/kaaJ4K/contact-book/blob/main/codestyle.md">https://github.com/kaaJ4K/contact-book/blob/main/codestyle.md</a></td>
+</tr>
+<tr>
+<td>Pull request (feature branch → main)</td>
+<td><a href="https://github.com/kaaJ4K/contact-book/pull/1">https://github.com/kaaJ4K/contact-book/pull/1</a></td>
+</tr>
+<tr>
+<td>Release v1.0.0</td>
+<td><a href="https://github.com/kaaJ4K/contact-book/releases/tag/v1.0.0">https://github.com/kaaJ4K/contact-book/releases/tag/v1.0.0</a></td>
+</tr>
+<tr>
+<td>Demo video</td>
+<td><a href="https://github.com/kaaJ4K/contact-book/blob/main/docs/demo.mp4">https://github.com/kaaJ4K/contact-book/blob/main/docs/demo.mp4</a></td>
+</tr>
+<tr>
+<td>Import / export samples</td>
+<td><a href="https://github.com/kaaJ4K/contact-book/blob/main/docs/samples/import-demo.xlsx">import-demo.xlsx</a> / <a href="https://github.com/kaaJ4K/contact-book/blob/main/docs/samples/export-demo.xlsx">export-demo.xlsx</a></td>
+</tr>
+</tbody></table>
+<p>Run locally:</p>
+<pre><code class="language-bash">git clone https://github.com/kaaJ4K/contact-book.git
+cd contact-book
+npm install
+npm run build
+npm run preview     # http://127.0.0.1:4173
+npm test            # 16 unit tests
+</code></pre>
+<p>Tech stack: React 18, hand-written CSS, and esbuild. Excel reading and writing are handled by <code>xlsx-js-style</code>. Data is stored in browser <code>localStorage</code>, and the application is built as a static site with no backend dependency.</p>
+<h2 id="2-requirements-coverage">2. Requirements Coverage</h2>
+<table>
+<thead>
+<tr>
+<th>Assignment requirement</th>
+<th align="right">Points</th>
+<th>Implementation</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bookmark contacts</td>
+<td align="right">25</td>
+<td>One-click star/unstar, favorites filter, favorite-first sorting, immediate persistence</td>
+<td>Screenshots 1–2; <code>ContactCard.jsx</code>, <code>contacts.js</code></td>
+</tr>
+<tr>
+<td>Multiple contact methods</td>
+<td align="right">10</td>
+<td>Unlimited phone, email, WeChat, QQ, address, and custom-platform entries; edit, delete, copy</td>
+<td>Screenshots 3–4; <code>ContactEditor.jsx</code>, <code>ContactDetail.jsx</code></td>
+</tr>
+<tr>
+<td>Excel export</td>
+<td align="right">25 (combined with import)</td>
+<td>One row per contact, 16 columns, favorites-only export, styled worksheet with filters</td>
+<td>Screenshot 7; <code>excel.js</code>; <code>docs/samples/export-demo.xlsx</code></td>
+</tr>
+<tr>
+<td>Excel import</td>
+<td align="right">Same as above</td>
+<td>Template download, drag-and-drop upload, header aliases, preview, row-level validation, merge/skip modes, result summary</td>
+<td>Screenshots 5–6; <code>ImportDialog.jsx</code></td>
+</tr>
+<tr>
+<td>Page style</td>
+<td align="right">10</td>
+<td>Warm-paper and deep-forest visual system; responsive layout; keyboard access and reduced-motion support</td>
+<td>Screenshots 1–10</td>
+</tr>
+<tr>
+<td>Cloud deployment (optional)</td>
+<td align="right">+15</td>
+<td>Public GitHub Pages deployment, not localhost</td>
+<td><a href="https://kaaj4k.github.io/contact-book/">https://kaaj4k.github.io/contact-book/</a></td>
+</tr>
+<tr>
+<td>Additional capabilities</td>
+<td align="right">—</td>
+<td>Global search, tag filters, three sort modes, delete undo, keyboard shortcuts, mobile floating button, auto-save status</td>
+<td>Described below</td>
+</tr>
+</tbody></table>
+<h3 id="feature-summary">Feature Summary</h3>
+<ul>
+<li><strong>Bookmarks:</strong> a star button on every card; a dedicated &quot;Favorites&quot; view in the sidebar; favorites are pinned to the top of every list; state is persisted immediately.</li>
+<li><strong>Multiple methods:</strong> each contact can hold an unlimited number of phone, email, WeChat, QQ, address, and custom &quot;other&quot; entries. Custom entries can carry a platform name such as GitHub or Xiaohongshu. Every entry can be copied from the detail drawer.</li>
+<li><strong>Excel export:</strong> 16 columns, one row per contact. Extra phone numbers and emails are folded into the last slot of their type and separated by <code>/</code>; importing the file restores them as separate entries, so no data is lost. A favorites-only export is also available.</li>
+<li><strong>Excel import:</strong> <code>.xlsx</code> / <code>.xlsm</code>, up to 8 MB and 2,000 rows; recognizes Chinese and English headers; requires a name; reports invalid emails, short phone numbers, and missing names by row number; supports &quot;merge&quot; and &quot;skip duplicates&quot; strategies.</li>
+<li><strong>Experience details:</strong> search across names, companies, titles, tags, notes, and every contact method; tag filtering; birthday field; undo for eight seconds after deletion; 12 sample contacts on first launch; one-click reset.</li>
+</ul>
+<h2 id="3-git-workflow-and-commit-history">3. Git Workflow and Commit History</h2>
+<p>This is an individual project, so there was no teammate collaboration. The repository was created from scratch, and development followed a feature-branch and pull-request workflow to keep the history readable and traceable.</p>
+<p><img src="images/github-commits.png" alt="GitHub commit history"></p>
+<p><img src="images/github-contributors.png" alt="GitHub contributors and commit count"></p>
+<p><img src="images/github-pr.png" alt="Merged pull request"></p>
+<p>Commit statistics at the time the screenshots were captured: <strong>9 commits on <code>main</code></strong> (including one merge commit); the GitHub Contributors page reported <strong>kaaJ4K — 8 commits</strong> because GitHub excludes merge commits from contribution counts. The repository has one contributor. New documentation commits added after the screenshots are visible on the repository&#39;s Commits page.</p>
+<p>Main commits:</p>
+<pre><code class="language-text">chore: scaffold esbuild static site and base page
+feat(data): add contact model, persistence and Excel engine
+feat(web): build bookmarkable address book with multi-method editor
+test: cover filtering, merging and Excel round trip
+chore(qa): add browser QA, screenshot and demo recording tools
+docs: add README, code standard, screenshots and demo video
+docs(blog): add assignment blog with implementation notes and PSP
+feat: Contact Atlas — bookmarks, multi-method contacts and Excel import/export   # PR merge
+</code></pre>
+<ul>
+<li>Branch strategy: <code>feature/address-book</code> → Pull Request → merge into <code>main</code>.</li>
+<li>Versioning: <code>v1.0.0</code> release with live app and demo-video links in the release notes.</li>
+<li>Commit convention: <code>type(scope): summary</code>, documented in <a href="https://github.com/kaaJ4K/contact-book/blob/main/codestyle.md">codestyle.md</a>.</li>
+</ul>
+<blockquote>
+<p>If the course requires students to fork a teacher-provided template repository, the template can be forked and these commits can be mirrored into it. This project was implemented from scratch because no starter repository was provided.</p>
+</blockquote>
+<h2 id="4-implementation-notes">4. Implementation Notes</h2>
+<h3 id="41-architecture">4.1 Architecture</h3>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────┐
+│                    React single-page app                  │
+│  App.jsx: filters / sorting / modal state / data actions  │
+│  components: sidebar, contact card, detail drawer,        │
+│              editor, import/export dialogs                │
+├──────────────────────────────────────────────────────────┤
+│  lib/contacts.js   data model, validation, search, merge  │
+│  lib/excel.js      header mapping, parsing, workbook      │
+│  lib/storage.js    localStorage access and reset          │
+│  data/seed.js      12 sample contacts                     │
+├──────────────────────────────────────────────────────────┤
+│  localStorage (single source of truth, no backend)        │
+└──────────────────────────────────────────────────────────┘
+</code></pre>
+<p>The code deliberately separates pure data functions from the UI. Filtering, sorting, merging, validation, and Excel conversion can all be tested in Node without a browser. React components only render state and bind events. This makes the behavior predictable and allows the storage layer to be replaced later without touching the UI.</p>
+<h3 id="42-data-model">4.2 Data Model</h3>
+<pre><code class="language-js">contact = {
+  id, name, company, title, birthday, tags: [], favorite, note,
+  methods: [
+    { id, type: &#39;phone&#39; | &#39;email&#39; | &#39;wechat&#39; | &#39;qq&#39; | &#39;address&#39; | &#39;other&#39;, label, value }
+  ],
+  createdAt, updatedAt,
+}
+</code></pre>
+<p>A contact owns an array of methods instead of fixed <code>phone1</code> / <code>phone2</code> / <code>email1</code> fields. This decision has three benefits:</p>
+<ol>
+<li>The UI can add any type and any number of methods.</li>
+<li>The Excel exporter maps the array to a fixed column template, folding excess values into the last slot of each type.</li>
+<li>Import merging can replace the method array without touching <code>favorite</code>, <code>createdAt</code>, or other local state.</li>
+</ol>
+<h3 id="43-bookmarks">4.3 Bookmarks</h3>
+<ul>
+<li>The star button toggles <code>favorite</code> and updates <code>updatedAt</code>.</li>
+<li><code>filterAndSort()</code> always applies <code>Number(b.favorite) - Number(a.favorite)</code> so favorites are pinned to the top in both the &quot;All&quot; and &quot;Favorites&quot; views.</li>
+<li>The sidebar and the toolbar share the same <code>scope</code> state, so there is no duplicated filter state.</li>
+<li>An <code>App</code> effect calls <code>saveBook()</code> after every state change, so there is no manual Save button.</li>
+</ul>
+<h3 id="44-multiple-contact-methods">4.4 Multiple Contact Methods</h3>
+<ul>
+<li>The editor renders dynamic method rows. Each row has a type selector, a value input, and a delete button.</li>
+<li>Choosing &quot;Other&quot; reveals a platform-name input for GitHub, Xiaohongshu, portfolios, and similar accounts.</li>
+<li>Validation rules: a name is required; email addresses must match a basic pattern; phone numbers need at least five digits; duplicates of the same type and value are rejected.</li>
+<li>The detail drawer color-codes method types and supports copy-to-clipboard for each entry.</li>
+</ul>
+<h3 id="45-excel-export-design">4.5 Excel Export Design</h3>
+<p>The export uses 16 fixed columns:</p>
+<pre><code class="language-text">Name | Company | Title | Birthday | Tags | Favorite | Phone1 | Phone2 | Phone3 | Email1 | Email2 | WeChat | QQ | Address | Other | Notes
+</code></pre>
+<p>Key rules:</p>
+<ol>
+<li>One row per contact; one column per information type.</li>
+<li>If a contact has more than three phone numbers, the third slot becomes <code>p3 / p4 / p5</code>. The same idea applies to more than two emails. Import splits these values back into separate methods.</li>
+<li>The &quot;Other&quot; column uses <code>Platform: account</code> format; multiple entries are separated by newlines.</li>
+<li>Strings beginning with <code>=</code>, <code>+</code>, <code>-</code>, or <code>@</code> are prefixed with <code>&#39;</code> on export to prevent formula injection. The prefix is removed on import.</li>
+<li>The workbook includes a styled header, bold text, column widths, alternating row fills, and auto-filter.</li>
+<li>A &quot;favorites only&quot; mode produces a compact backup of frequently used contacts.</li>
+</ol>
+<h3 id="46-excel-import-flow">4.6 Excel Import Flow</h3>
+<pre><code class="language-text">Choose or drop a file
+   ↓
+Validate extension, size, and row count
+   ↓
+Parse the workbook → find the header within the first 10 rows → map aliases
+   ↓
+Parse each row: name, tags, favorite, phones, emails, WeChat, QQ, address, other
+   ↓
+Collect row-level errors without stopping valid rows → preview and statistics
+   ↓
+Choose &quot;Merge updates&quot; or &quot;Skip duplicates&quot;
+   ↓
+Match by name + phone/email → write once → show created/updated/skipped/warnings
+</code></pre>
+<p>Duplicate detection requires the same name plus at least one shared phone number or email address. If neither side has a phone or email, the name alone is used. This avoids merging two different people who happen to share a name. Merge mode preserves the existing favorite flag and creation time and unions the tags; skip mode leaves existing contacts untouched.</p>
+<h3 id="47-visual-design-and-responsiveness">4.7 Visual Design and Responsiveness</h3>
+<ul>
+<li>Concept: an editorial &quot;paper card file&quot; for contacts. Deep forest-green sidebar, warm paper background, and coral bookmark highlights.</li>
+<li>Typography: serif display faces for headings and a clean sans-serif for body text.</li>
+<li>Design tokens define colors, spacing, radii, and shadows. Cards lift slightly on hover; dialogs and drawers use restrained transitions.</li>
+<li>Responsive behavior: fixed sidebar above 980 px; off-canvas sidebar below 980 px; single-column cards below 760 px; horizontally scrollable filter row; bottom-aligned dialogs on mobile.</li>
+<li>Accessibility: icon-only buttons have <code>aria-label</code>; dialogs use <code>role=&quot;dialog&quot;</code> and <code>aria-modal</code>; Escape closes the topmost layer; <code>:focus-visible</code> draws a visible ring; all animations are disabled under <code>prefers-reduced-motion</code>.</li>
+</ul>
+<h3 id="48-testing-and-quality">4.8 Testing and Quality</h3>
+<p><code>npm test</code> uses Node&#39;s built-in <code>node:test</code> runner. All 16 tests pass:</p>
+<ul>
+<li>Contact normalization, required-field validation, and duplicate-method validation.</li>
+<li>Full-text search, tag filtering, and favorite-first sorting.</li>
+<li>Duplicate detection and both merge and skip import modes.</li>
+<li>Excel column structure, folding and restoring multiple phones/emails, and custom platform labels.</li>
+<li>Round-trip parsing of the import template, English header aliases, and headers below title rows.</li>
+<li>Row-level warnings for missing names and invalid emails, a friendly error for a missing name column, and formula-injection escaping.</li>
+</ul>
+<pre><code class="language-text">✔ tests 16
+✔ pass 16
+✔ fail 0
+</code></pre>
+<p>The browser QA script (<code>tools/capture.mjs</code>) also drives the real application through favorites, create/read/update/delete, import, export, search, and mobile layouts, capturing screenshots and checking console errors.</p>
+<h2 id="5-application-screenshots">5. Application Screenshots</h2>
+<table>
+<thead>
+<tr>
+<th>Main view: all contacts</th>
+<th>Favorites view</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="images/01-home.png" alt="Main view"></td>
+<td><img src="images/02-favorites.png" alt="Favorites"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Contact detail with multiple methods</th>
+<th>Editor with methods and tags</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="images/03-contact-detail.png" alt="Contact detail"></td>
+<td><img src="images/04-editor.png" alt="Editor"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Excel import preview and validation</th>
+<th>Import result summary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="images/05-import-preview.png" alt="Import preview"></td>
+<td><img src="images/06-import-result.png" alt="Import result"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Excel export dialog</th>
+<th>Search and filtering</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="images/07-export.png" alt="Export"></td>
+<td><img src="images/08-search.png" alt="Search"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Mobile main view</th>
+<th>Mobile sidebar</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="images/09-mobile.png" alt="Mobile"></td>
+<td><img src="images/10-mobile-menu.png" alt="Mobile menu"></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>The application UI is in Chinese; screenshot captions and this blog are in English. All sample contacts are fictional and used only to demonstrate the features.</p>
+</blockquote>
+<h2 id="6-demo-video">6. Demo Video</h2>
+<ul>
+<li><strong>Online video:</strong> <a href="https://kaaj4k.github.io/contact-book/blog/demo.mp4">https://kaaj4k.github.io/contact-book/blog/demo.mp4</a></li>
+<li><strong>Repository file:</strong> <a href="https://github.com/kaaJ4K/contact-book/blob/main/docs/demo.mp4">docs/demo.mp4</a></li>
+<li><strong>Length / coverage:</strong> about 65 seconds. It covers favorites filtering, multiple-method editing, creating a contact, Excel import preview and results, the export dialog, search, and the mobile layout.</li>
+<li>If the course platform requires a direct video upload, use <code>docs/demo.mp4</code> from the repository or re-upload it to the platform and add that link here.</li>
+</ul>
+<p><a href="https://kaaj4k.github.io/contact-book/blog/demo.mp4"><img src="images/video-poster.jpg" alt="Watch the demo video"></a></p>
+<h2 id="7-cloud-deployment">7. Cloud Deployment</h2>
+<p>The application is a static single-page site. It is built and deployed to <strong>GitHub Pages</strong>:</p>
+<ol>
+<li>Run <code>npm run build</code> to generate <code>dist/</code>.</li>
+<li>Publish the contents of <code>dist/</code> to the repository&#39;s <code>gh-pages</code> branch.</li>
+<li>In Settings → Pages, choose &quot;Deploy from a branch&quot; → <code>gh-pages / (root)</code>.</li>
+<li>Public URL: <a href="https://kaaj4k.github.io/contact-book/">https://kaaj4k.github.io/contact-book/</a>.</li>
+</ol>
+<p>This is not localhost and does not depend on the developer&#39;s computer: any device can open the public URL and use the application. Data is stored in each visitor&#39;s browser, and the first visit loads 12 sample contacts.</p>
+<p><img src="images/live-site.png" alt="Live cloud deployment"></p>
+<h2 id="8-division-of-labor-and-contribution">8. Division of Labor and Contribution</h2>
+<p>This is an <strong>individual project</strong> with no team members.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Student ID</th>
+<th>Work</th>
+<th align="right">Contribution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Liao Weibin</td>
+<td>832402110</td>
+<td>Requirement analysis, UI/UX design, data model, bookmarks, multiple contact methods, Excel import/export, testing, cloud deployment, blog, and demo video</td>
+<td align="right">100%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td>—</td>
+<td>—</td>
+<td align="right"><strong>100%</strong></td>
+</tr>
+</tbody></table>
+<h2 id="9-difficulties-attempts-and-lessons-learned">9. Difficulties, Attempts, and Lessons Learned</h2>
+<blockquote>
+<p>This was an individual project, so there were no team-coordination difficulties. The sections below record the main technical difficulties, the attempts made, whether they were solved, and the lessons learned.</p>
+</blockquote>
+<h3 id="difficulty-1-fixed-excel-columns-vs-unlimited-contact-methods">Difficulty 1: Fixed Excel Columns vs. Unlimited Contact Methods</h3>
+<ul>
+<li><strong>Problem:</strong> The assignment requires one column per information type, but the application allows an unlimited number of phone numbers and emails. Truncating values would lose data.</li>
+<li><strong>Attempt:</strong> A fixed 16-column template plus a &quot;fold and restore&quot; rule. Values beyond the reserved slots are joined into the last slot of their type with a separator; import splits them back into separate entries. A round-trip unit test covers four phone numbers, three emails, multiple addresses, and custom platform labels.</li>
+<li><strong>Solved:</strong> Yes. The round-trip is covered by automated tests.</li>
+<li><strong>Lesson:</strong> A spreadsheet is a presentation format, not a data model. A clear mapping rule can preserve both readability and completeness.</li>
+</ul>
+<h3 id="difficulty-2-duplicate-contacts-and-invalid-rows-in-real-excel-files">Difficulty 2: Duplicate Contacts and Invalid Rows in Real Excel Files</h3>
+<ul>
+<li><strong>Problem:</strong> Real spreadsheets often contain missing names, malformed emails, and duplicate rows. Aborting the whole import on the first error is a poor experience.</li>
+<li><strong>Attempt:</strong> A three-step flow: parse → preview → confirm. Row-level errors are collected and shown with sheet row numbers. Two modes are offered: merge updates and skip duplicates. Duplicate detection uses name plus phone/email to avoid merging people with the same name. The result screen shows created, updated, skipped, and warning counts.</li>
+<li><strong>Solved:</strong> Yes. <code>import-demo.xlsx</code> consistently produces 4 created / 2 updated / 2 warnings, demonstrating the behavior.</li>
+<li><strong>Lesson:</strong> The hard part of import is not reading a file; it is turning unpredictable external data into a predictable, reviewable operation.</li>
+</ul>
+<h3 id="difficulty-3-data-reliability-in-a-local-first-application">Difficulty 3: Data Reliability in a Local-First Application</h3>
+<ul>
+<li><strong>Problem:</strong> There is no backend, so data lives only in the browser. Clearing browser data or switching devices could lose contacts.</li>
+<li><strong>Attempt:</strong> Every mutation is written to <code>localStorage</code> immediately. A persistent auto-save indicator explains where data is stored. The Excel exporter serves as a backup and migration path. Deletion offers an eight-second undo. The first visit loads sample data with a clear reset action.</li>
+<li><strong>Solved:</strong> Yes. Data can be exported, and destructive actions are reversible.</li>
+<li><strong>Lesson:</strong> &quot;Local-first&quot; does not mean &quot;care-free&quot;; backup and recovery must be part of the feature set.</li>
+</ul>
+<h3 id="difficulty-4-static-deployment-visual-identity-and-accessibility">Difficulty 4: Static Deployment, Visual Identity, and Accessibility</h3>
+<ul>
+<li><strong>Problem:</strong> Static deployment is simple, but the app still needs to work on every screen size and remain visually distinctive. Dialogs, cards, and mobile interactions are easy to let diverge.</li>
+<li><strong>Attempt:</strong> Relative asset paths (<code>base: &#39;./&#39;</code>) support GitHub Pages sub-paths. Design tokens keep colors and spacing consistent. Screenshots at desktop and 390 px mobile widths validate each breakpoint. Icon-only buttons have accessible names; Escape closes dialogs; reduced-motion preferences are respected.</li>
+<li><strong>Solved:</strong> Yes. Desktop and mobile layouts were verified with real screenshots.</li>
+<li><strong>Lesson:</strong> Visual design is not a final coat of paint; constraints established early make later features cheaper to add.</li>
+</ul>
+<h3 id="difficulty-5-maintaining-delivery-quality-as-a-solo-developer">Difficulty 5: Maintaining Delivery Quality as a Solo Developer</h3>
+<ul>
+<li><strong>Problem:</strong> Without a teammate reviewing the work, import/export bugs or mobile layout problems could go unnoticed until the end.</li>
+<li><strong>Attempt:</strong> Pure data functions and tests came first, then the UI. A Node + CDP browser QA script walks through favorites, CRUD, import, export, and mobile layout automatically. Screenshots and the demo video are generated by scripts as well, reducing manual omissions.</li>
+<li><strong>Solved:</strong> Yes. <code>tools/capture.mjs</code> and <code>tools/record.mjs</code> can regenerate the screenshots and video consistently.</li>
+<li><strong>Lesson:</strong> Automation is not only for testing; it also produces reliable delivery artifacts.</li>
+</ul>
+<h2 id="10-psp-table">10. PSP Table</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th align="right">Planned (h)</th>
+<th align="right">Actual (h)</th>
+<th align="right">Actual / Planned</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Requirement analysis and task breakdown</td>
+<td align="right">2.0</td>
+<td align="right">2.0</td>
+<td align="right">100%</td>
+<td>Split bookmarks, multiple methods, Excel, deployment, and blog</td>
+</tr>
+<tr>
+<td>Tech selection and project setup</td>
+<td align="right">1.0</td>
+<td align="right">1.0</td>
+<td align="right">100%</td>
+<td>React + esbuild + xlsx-js-style; checked static deployment feasibility</td>
+</tr>
+<tr>
+<td>Data model and local storage</td>
+<td align="right">2.0</td>
+<td align="right">2.5</td>
+<td align="right">125%</td>
+<td>One-to-many method model, merge rules, storage fallback</td>
+</tr>
+<tr>
+<td>Bookmarks and multiple methods</td>
+<td align="right">5.0</td>
+<td align="right">6.0</td>
+<td align="right">120%</td>
+<td>Cards, detail drawer, editor, validation, interaction polish</td>
+</tr>
+<tr>
+<td>Excel import and export</td>
+<td align="right">6.0</td>
+<td align="right">8.0</td>
+<td align="right">133%</td>
+<td>Column mapping, fold/restore, import preview, errors, styling</td>
+</tr>
+<tr>
+<td>Page style and responsive layout</td>
+<td align="right">3.0</td>
+<td align="right">3.5</td>
+<td align="right">117%</td>
+<td>Design tokens, motion, mobile layout, accessibility</td>
+</tr>
+<tr>
+<td>Testing and bug fixing</td>
+<td align="right">2.0</td>
+<td align="right">2.5</td>
+<td align="right">125%</td>
+<td>16 unit tests and automated browser QA</td>
+</tr>
+<tr>
+<td>Cloud deployment and acceptance</td>
+<td align="right">2.0</td>
+<td align="right">2.0</td>
+<td align="right">100%</td>
+<td>GitHub Pages, screenshots, public URL checks</td>
+</tr>
+<tr>
+<td>Blog, screenshots, and demo video</td>
+<td align="right">3.0</td>
+<td align="right">2.5</td>
+<td align="right">83%</td>
+<td>Markdown blog, 10 application screenshots, 65-second video</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td align="right"><strong>26.0</strong></td>
+<td align="right"><strong>30.0</strong></td>
+<td align="right"><strong>115%</strong></td>
+<td>Main overrun was Excel mapping and import validation</td>
+</tr>
+</tbody></table>
+<h2 id="11-self-check-against-the-grading-rubric">11. Self-Check Against the Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Rubric item</th>
+<th align="right">Points</th>
+<th>Self-check</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Blog format in Markdown</td>
+<td align="right">10</td>
+<td>✅ Markdown; repository, deployment, code-standard, PR, and release links included</td>
+<td>This blog; <code>codestyle.md</code></td>
+</tr>
+<tr>
+<td>Implementation ideas, screenshots, division of labor</td>
+<td align="right">20</td>
+<td>✅ Architecture, data model, Excel mapping, and testing explained; 10 real screenshots; individual contribution 100%</td>
+<td>Sections 4, 5, and 8</td>
+</tr>
+<tr>
+<td>Page style</td>
+<td align="right">10</td>
+<td>✅ Consistent design language, responsive layout, accessibility details</td>
+<td>Screenshots 1–10</td>
+</tr>
+<tr>
+<td>Bookmark contacts</td>
+<td align="right">25</td>
+<td>✅ Star toggle, favorites filter, favorite-first sorting, persistence</td>
+<td>Screenshots 1–2</td>
+</tr>
+<tr>
+<td>Multiple contact methods</td>
+<td align="right">10</td>
+<td>✅ Unlimited methods across six types, custom platforms, edit/delete/copy</td>
+<td>Screenshots 3–4; tests</td>
+</tr>
+<tr>
+<td>Import and export</td>
+<td align="right">25</td>
+<td>✅ Complete Excel import/export loop, template, preview, validation, merge/skip</td>
+<td>Screenshots 5–7; sample workbooks; tests</td>
+</tr>
+<tr>
+<td>Web cloud deployment (optional)</td>
+<td align="right">+15</td>
+<td>✅ Public GitHub Pages deployment, not localhost</td>
+<td>Live URL; deployment screenshot</td>
+</tr>
+<tr>
+<td><strong>Base total</strong></td>
+<td align="right"><strong>100</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Including optional bonus</strong></td>
+<td align="right"><strong>115</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<h2 id="12-pre-submission-checklist">12. Pre-Submission Checklist</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> GitHub repository created; at least 3 commits; feature branch and pull request completed</li>
+<li><input checked="" disabled="" type="checkbox"> Project builds (<code>npm install &amp;&amp; npm run build</code>) and tests pass (<code>npm test</code>)</li>
+<li><input checked="" disabled="" type="checkbox"> Core features: bookmarks, multiple contact methods, Excel import/export</li>
+<li><input checked="" disabled="" type="checkbox"> Page style: desktop and mobile screenshots</li>
+<li><input checked="" disabled="" type="checkbox"> Public deployment on GitHub Pages (not localhost)</li>
+<li><input checked="" disabled="" type="checkbox"> Blog contains assignment description table, table of contents, project links, implementation notes, screenshots, contribution ratio, difficulties, and PSP table</li>
+<li><input checked="" disabled="" type="checkbox"> Demo video recorded and included in the repository / online blog</li>
+<li><input disabled="" type="checkbox"> Publish this English version on the course-required platform (CSDN or the course site) and submit the link before the deadline</li>
+<li><input disabled="" type="checkbox"> If the course requires a fork of a template repository, complete the fork and replace the repository link in this blog</li>
+</ul>
+<hr>
+<p><strong>Reflection:</strong> The most valuable outcome of this assignment was not a specific screen, but learning to translate requirements into a testable data model, then use a repeatable build, test, and screenshot workflow to protect delivery quality. Bookmarks, multiple contact methods, and Excel import/export look like three independent features, but all three depend on how a person is represented. Once the model is clear, the UI and the file format are only projections of it.</p>
+
+  </article>
+</main>
+<footer>
+  <span>Software Engineering Individual Assignment · Liao Weibin 832402110</span><br>
+  <a href="../">Live app</a> · <a href="https://github.com/kaaJ4K/contact-book">Repository</a> · <a href="./blog.md">blog.md</a>
+</footer>
+</body>
+</html>
