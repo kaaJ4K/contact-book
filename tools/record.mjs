@@ -175,9 +175,9 @@ const showIntro = async () => {
     el.innerHTML = \`
       <div class="demo-intro__inner">
         <div class="demo-intro__kicker">SOFTWARE ENGINEERING · ASSIGNMENT</div>
-        <div class="demo-intro__title">联络簿 · Contact Atlas</div>
+        <div class="demo-intro__title">Contact Atlas</div>
         <div class="demo-intro__line"></div>
-        <div class="demo-intro__sub">收藏重要的人 · 多条联系方式 · Excel 导入导出</div>
+        <div class="demo-intro__sub">Bookmarks · Multiple contact methods · Excel import/export</div>
         <div class="demo-intro__foot">LIAO WEIBIN · 832402110 · INDIVIDUAL PROJECT</div>
       </div>
     \`;
@@ -195,8 +195,8 @@ const showOutro = async () => {
     el.id = 'demo-outro';
     el.innerHTML = \`
       <div class="demo-outro__inner">
-        <div class="demo-outro__title">把重要的人，放在触手可及的地方</div>
-        <div class="demo-outro__sub">感谢观看 · 数据只保存在你的浏览器</div>
+        <div class="demo-outro__title">Keep the people who matter within reach</div>
+        <div class="demo-outro__sub">Thanks for watching · Your data stays in your browser</div>
         <div class="demo-outro__foot">CONTACT ATLAS · 2026</div>
       </div>
     \`;
@@ -239,17 +239,17 @@ try {
   await showIntro();
 
   // 1 · Bookmarks
-  await caption('① 收藏常用联系人：卡片右上角点亮星标');
+  await caption('① Bookmark the people you contact most');
   await browser.sleep(700);
   await click('[data-testid="favorites-filter"]');
   await browser.sleep(1700);
-  await caption('「我的收藏」一键筛出常用联系人，收藏始终优先显示');
+  await caption('The Favorites view keeps frequently used contacts one click away');
   await browser.sleep(1500);
   await click('.nav-item');
   await browser.sleep(800);
 
   // 2 · Multiple contact methods
-  await caption('② 同一个人可以保存任意多条联系方式');
+  await caption('② One person can hold unlimited contact methods');
   await browser.sleep(700);
   await browser.click('[data-testid="contact-card"]');
   await browser.sleep(1800);
@@ -267,7 +267,7 @@ try {
     return true;
   })()`);
   await browser.sleep(1300);
-  await caption('手机、邮箱、微信、QQ、地址与自定义平台，每一行都能独立编辑');
+  await caption('Phone, email, WeChat, QQ, address, or a custom platform — every row is editable');
   await browser.sleep(1700);
   await click('[data-testid="save-contact"]');
   await browser.sleep(1500);
@@ -275,13 +275,13 @@ try {
   await browser.sleep(700);
 
   // 3 · Create a contact
-  await caption('③ 新建联系人，并把标签、生日和备注一起整理好');
+  await caption('③ Create a contact with tags, birthday, and notes');
   await browser.sleep(600);
   await click('[data-testid="new-contact"]');
   await browser.sleep(700);
-  await setInput('[data-testid="contact-name-input"]', '顾小满');
+  await setInput('[data-testid="contact-name-input"]', 'Alex Chen');
   await setInput('[data-testid="method-value-input"]', '138 8888 0000');
-  await setInput('[data-testid="tags-input"]', '朋友、新认识');
+  await setInput('[data-testid="tags-input"]', 'friend, new');
   await browser.sleep(1300);
   await click('[data-testid="save-contact"]');
   await browser.sleep(1800);
@@ -289,41 +289,41 @@ try {
   await browser.sleep(700);
 
   // 4 · Import
-  await caption('④ 从 Excel 导入：先预览，再选择合并或跳过重复');
+  await caption('④ Import from Excel: preview first, then merge or skip duplicates');
   await browser.sleep(700);
   await click('[data-testid="sidebar-import"]');
   await browser.sleep(900);
   await selectFile('[data-testid="import-file-input"]');
   await browser.waitForSelector('[data-testid="confirm-import"]', { timeout: 12000 });
   await browser.sleep(1900);
-  await caption('逐行校验并给出行号提示；4 位新增、2 位更新、2 条提示');
+  await caption('Row-level validation reports line numbers: 4 created, 2 updated, 2 warnings');
   await browser.sleep(1600);
   await browser.click('[data-testid="confirm-import"]');
   await browser.waitForSelector('[data-testid="import-done"]', { timeout: 6000 });
   await browser.sleep(1800);
-  await clickByText('.modal__footer .button', '完成');
+  await click('.import-done .modal__footer .button--primary');
   await browser.sleep(900);
 
   // 5 · Export
-  await caption('⑤ 导出 Excel：一行一位联系人，一种信息一列');
+  await caption('⑤ Export to Excel: one row per contact, one column per field');
   await browser.sleep(600);
   await click('[data-testid="export-button"]');
   await browser.sleep(1700);
-  await caption('可选「仅导出收藏」；导出的表格可再次回读，适合备份');
+  await caption('Optionally export favorites only; the workbook can be imported again');
   await browser.sleep(1600);
   await browser.evaluate(`window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))`);
   await browser.sleep(700);
 
   // 6 · Search and tags
-  await caption('⑥ 搜索姓名、公司、标签或任意联系方式');
+  await caption('⑥ Search names, companies, tags, or any contact value');
   await browser.sleep(500);
-  await setInput('[data-testid="search-input"]', '设计');
+  await setInput('[data-testid="search-input"]', 'lin');
   await browser.sleep(1500);
   await browser.click('.search-box__clear');
   await browser.sleep(700);
 
   // 7 · Mobile
-  await caption('⑦ 响应式布局：手机上也能完成查看、收藏和新建');
+  await caption('⑦ Responsive layout: view, bookmark, and create contacts on mobile');
   await browser.sleep(500);
   await browser.send('Emulation.setDeviceMetricsOverride', {
     width: 390,

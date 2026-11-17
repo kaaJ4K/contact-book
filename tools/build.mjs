@@ -131,7 +131,7 @@ function buildBlog() {
   fs.writeFileSync(
     path.join(blogDir, 'index.html'),
     renderBlogPage({
-      title: '联络簿 Contact Atlas · 作业博客',
+      title: 'Contact Atlas · Assignment Blog',
       body,
       markdownHref: './blog.md',
       appHref: '../',

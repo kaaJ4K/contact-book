@@ -5,12 +5,12 @@
  */
 export function renderBlogPage({ title, body, markdownHref, appHref, repoHref }) {
   return `<!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
-<meta name="description" content="联络簿 Contact Atlas 作业博客：收藏联系人、多条联系方式、Excel 导入导出与云端部署。">
+<meta name="description" content="Contact Atlas assignment blog: bookmarks, multiple contact methods, Excel import/export, and cloud deployment.">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <style>
 :root {
@@ -126,13 +126,13 @@ footer a { margin: 0 6px; }
 <body>
 <header class="site-header">
   <div class="site-brand">
-    <strong>联络簿 · Contact Atlas</strong>
+    <strong>Contact Atlas</strong>
     <small>ASSIGNMENT BLOG · 2026</small>
   </div>
-  <nav class="site-nav" aria-label="页面导航">
-    <a href="${appHref}">打开应用</a>
-    <a href="${repoHref}">GitHub 仓库</a>
-    <a href="${markdownHref}">Markdown 原文</a>
+  <nav class="site-nav" aria-label="Page navigation">
+    <a href="${appHref}">Open app</a>
+    <a href="${repoHref}">GitHub repository</a>
+    <a href="${markdownHref}">Markdown source</a>
   </nav>
 </header>
 <main>
@@ -141,8 +141,8 @@ ${body}
   </article>
 </main>
 <footer>
-  <span>软件工程个人编程作业 · 廖伟镔 832402110</span><br>
-  <a href="${appHref}">在线应用</a> · <a href="${repoHref}">项目仓库</a> · <a href="${markdownHref}">blog.md</a>
+  <span>Software Engineering Individual Assignment · Liao Weibin 832402110</span><br>
+  <a href="${appHref}">Live app</a> · <a href="${repoHref}">Repository</a> · <a href="${markdownHref}">blog.md</a>
 </footer>
 </body>
 </html>
